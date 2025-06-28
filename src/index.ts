@@ -40,7 +40,7 @@ function comparePower (item1: IMagicalItem, item2: IMagicalItem) {
 }
 
 // Generic class for inventory
-class Inventory <T> {
+class Inventory <T extends { name: string }> {
   private items: T[]
 
   constructor (items: T[]) {
@@ -54,7 +54,27 @@ class Inventory <T> {
   getAll () {
     return this.items
   }
+
+  getNames () {
+    return this.items.map(item => item.name)
+    // ['Cap of Wisdom', 'Belt of Strength']
+  }
+
+  getProperty (item: T, key: keyof T) {
+    return item[key]
+  }
 }
+interface SodaCan {
+  amount: number
+  full: number
+}
+interface CatTreats {
+  name: string
+  full: number
+}
+const treatInventory = new Inventory<CatTreats>([])
+treatInventory.add({ name: 'Meaty Bites', full: 0.8 })
+treatInventory.add({ name: 'Party Mix', full: 1 })
 
 // Example items
 const capOfWisdom = new MagicalItem('Cap of Wisdom', 'hat', 9001, true)
@@ -66,17 +86,32 @@ const beltOfStrength = new MagicalItem(
 )
 
 // Create inventory and add items
-const inventory = new Inventory<MagicalItem>([])
-inventory.add(capOfWisdom)
-inventory.add(beltOfStrength)
+const magicInventory = new Inventory<MagicalItem>([])
+magicInventory.add(capOfWisdom)
+magicInventory.add(beltOfStrength)
+// magicInventory.add({ name: 'Meaty Bites', full: 0.8 })
+console.log(magicInventory.getProperty(capOfWisdom, 'name'))
 
-// Display all item info
-const items = inventory.getAll()
-items.forEach(item => item.displayInfo())
+// // Display all item info
+// const items = inventory.getAll()
+// items.forEach(item => item.displayInfo())
 
-// Compare power levels
-const higherName = comparePower(capOfWisdom, beltOfStrength)
-console.log('higherName:', higherName)
+// // Compare power levels
+// const higherName = comparePower(capOfWisdom, beltOfStrength)
+// console.log('higherName:', higherName)
 
-// Access property using keyof
+// // Access property using keyof
 
+
+
+
+// function describe <T, K extends keyof T> (item: T, key: K) {
+//   const value = item[key]
+//   console.log(`The ${String(key)} is ${value}`)
+// }
+
+// describe({ position: 100, speed: 50 }, 'speed')
+// describe({ name: 'Meaty bites', full: 0.8 }, 'name')
+
+// // This should fail
+// describe({ name: 'Meaty bites', full: 0.8 }, 'abc')
