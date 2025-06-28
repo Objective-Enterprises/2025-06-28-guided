@@ -105,13 +105,25 @@ console.log(magicInventory.getProperty(capOfWisdom, 'name'))
 
 
 
-// function describe <T, K extends keyof T> (item: T, key: K) {
-//   const value = item[key]
-//   console.log(`The ${String(key)} is ${value}`)
-// }
+function describe <
+  Item,
+  Key extends keyof Item,
+  Other extends Item,
+  OtherValue extends Other[Key]
+> (
+  item: Item,
+  key: Key,
+  other: Other,
+  otherValue: OtherValue
+) {
+  const value = item[key]
+  console.log('item:', item)
+  console.log('other:', other)
+  console.log(
+    `The ${String(key)} is ${value}, but the other ${String(key)} was ${otherValue}`
+  )
+}
 
-// describe({ position: 100, speed: 50 }, 'speed')
-// describe({ name: 'Meaty bites', full: 0.8 }, 'name')
-
-// // This should fail
-// describe({ name: 'Meaty bites', full: 0.8 }, 'abc')
+const boat = { position: 100, speed: 50, destination: 'New Orleans' }
+const plane = { position: 0, speed: 1000, destination: 'New York' }
+describe(boat, 'speed', plane, 1000)

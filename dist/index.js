@@ -49,7 +49,7 @@ const magicInventory = new Inventory([]);
 magicInventory.add(capOfWisdom);
 magicInventory.add(beltOfStrength);
 // magicInventory.add({ name: 'Meaty Bites', full: 0.8 })
-console.log(magicInventory.getProperty({ x: 1 }, 'x'));
+console.log(magicInventory.getProperty(capOfWisdom, 'name'));
 // // Display all item info
 // const items = inventory.getAll()
 // items.forEach(item => item.displayInfo())
@@ -57,11 +57,12 @@ console.log(magicInventory.getProperty({ x: 1 }, 'x'));
 // const higherName = comparePower(capOfWisdom, beltOfStrength)
 // console.log('higherName:', higherName)
 // // Access property using keyof
-// function describe <T, K extends keyof T> (item: T, key: K) {
-//   const value = item[key]
-//   console.log(`The ${String(key)} is ${value}`)
-// }
-// describe({ position: 100, speed: 50 }, 'speed')
-// describe({ name: 'Meaty bites', full: 0.8 }, 'name')
-// // This should fail
-// describe({ name: 'Meaty bites', full: 0.8 }, 'abc')
+function describe(item, key, other, otherValue) {
+    const value = item[key];
+    console.log('item:', item);
+    console.log('other:', other);
+    console.log(`The ${String(key)} is ${value}, but the other ${String(key)} was ${otherValue}`);
+}
+const boat = { position: 100, speed: 50 };
+const plane = { position: 0, speed: 1000, wings: 2 };
+describe(boat, 'speed', plane, 1000);
