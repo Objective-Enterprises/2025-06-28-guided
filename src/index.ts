@@ -26,7 +26,7 @@ class MagicalItem implements IMagicalItem {
   }
 
   displayInfo () {
-    const rarity = this.isRare && 'rare '
+    const rarity = this.isRare ? 'rare ' : ''
     console.log(`${this.name} is a ${rarity}${this.type} with ${this.powerLevel} power`)
   }
 }
@@ -38,6 +38,25 @@ function comparePower (item1: IMagicalItem, item2: IMagicalItem) {
   }
   return item2.name
 }
+
+// Generic class for inventory
+class Inventory <T> {
+  private items: T[]
+
+  constructor (items: T[]) {
+    this.items = items
+  }
+
+  add (item: T) {
+    this.items.push(item)
+  }
+
+  getAll () {
+    return this.items
+  }
+}
+
+// Example items
 const capOfWisdom = new MagicalItem('Cap of Wisdom', 'hat', 9001, true)
 const beltOfStrength = new MagicalItem(
   'Belt of Strength',
@@ -45,23 +64,19 @@ const beltOfStrength = new MagicalItem(
   9002,
   false
 )
-const higherName = comparePower(capOfWisdom, beltOfStrength)
-console.log('higherName:', higherName)
-
-
-// Generic class for inventory
-
-
-// Example items
-
 
 // Create inventory and add items
+const inventory = new Inventory<MagicalItem>([])
+inventory.add(capOfWisdom)
+inventory.add(beltOfStrength)
 
 // Display all item info
-
+const items = inventory.getAll()
+items.forEach(item => item.displayInfo())
 
 // Compare power levels
-
+const higherName = comparePower(capOfWisdom, beltOfStrength)
+console.log('higherName:', higherName)
 
 // Access property using keyof
 
