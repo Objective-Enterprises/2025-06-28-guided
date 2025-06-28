@@ -31,11 +31,22 @@ class MagicalItem implements IMagicalItem {
   }
 }
 
-const test = new MagicalItem('Cap of Wisdom', 'hat', 9001, true)
-test.displayInfo()
-
-
 // Function to compare power levels of two items
+function comparePower (item1: IMagicalItem, item2: IMagicalItem) {
+  if (item1.powerLevel > item2.powerLevel) {
+    return item1.name
+  }
+  return item2.name
+}
+const capOfWisdom = new MagicalItem('Cap of Wisdom', 'hat', 9001, true)
+const beltOfStrength = new MagicalItem(
+  'Belt of Strength',
+  'belt',
+  9002,
+  false
+)
+const higherName = comparePower(capOfWisdom, beltOfStrength)
+console.log('higherName:', higherName)
 
 
 // Generic class for inventory
